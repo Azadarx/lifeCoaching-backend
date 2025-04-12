@@ -67,7 +67,7 @@ app.get('/api/razorpay-key', (req, res) => {
 });
 
 // API: Create Razorpay Order
-app.post('/api/create-order', async (req, res) => {
+app.post(`${import.meta.env.VITE_API_URL}/api/create-order`, async (req, res) => {
   try {
     const { amount, currency, receipt, customerDetails, cartItems } = req.body;
 
@@ -95,7 +95,7 @@ app.post('/api/create-order', async (req, res) => {
 });
 
 // API: Handle payment success
-app.post('/api/payment-success', async (req, res) => {
+app.post(`${import.meta.env.VITE_API_URL}/api/payment-success`, async (req, res) => {
   try {
     const {
       razorpayPaymentId,
@@ -215,7 +215,7 @@ if (fs.existsSync(buildPath)) {
 // Add this new endpoint to your server.js file
 
 // API: Handle contact form submissions
-app.post('/api/contact', async (req, res) => {
+app.post(`${import.meta.env.VITE_API_URL}/api/contact`, async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
     
