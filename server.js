@@ -67,7 +67,7 @@ app.get('/api/razorpay-key', (req, res) => {
 });
 
 // API: Create Razorpay Order
-app.post(`${import.meta.env.VITE_BACKEND_URL}/api/create-order`, async (req, res) => {
+app.post('/api/create-order', async (req, res) => {
   try {
     const { amount, currency, receipt, customerDetails, cartItems } = req.body;
 
@@ -106,7 +106,7 @@ app.post('/api/payment-success', async (req, res) => {
       amount
     } = req.body;
 
-    console.log('💰 Payment success callback received:', { 
+    console.log('💰 Payment success callback received:', {
       paymentId: razorpayPaymentId,
       orderId: razorpayOrderId
     });
@@ -218,9 +218,9 @@ if (fs.existsSync(buildPath)) {
 app.post('/api/contact', async (req, res) => {
   try {
     const { name, email, subject, message } = req.body;
-    
+
     console.log('📝 Contact form submission received:', { name, email, subject });
-    
+
     // Email to admin
     const contactMailOptions = {
       from: `"Contact Form" <${process.env.EMAIL_USER}>`,
@@ -241,7 +241,7 @@ app.post('/api/contact', async (req, res) => {
         </div>
       `
     };
-    
+
     // Optional: Send confirmation email to the user
     const userConfirmationOptions = {
       from: `"Mrs. Shereen Life Coaching" <${process.env.EMAIL_USER}>`,
@@ -268,7 +268,7 @@ app.post('/api/contact', async (req, res) => {
     // Send email to admin
     await transporter.sendMail(contactMailOptions);
     console.log('✉️ Contact form email sent to admin');
-    
+
     // Send confirmation to user
     await transporter.sendMail(userConfirmationOptions);
     console.log('✉️ Confirmation email sent to user:', email);
