@@ -195,7 +195,11 @@ app.post('/api/payment-success', async (req, res) => {
       console.error('❌ Failed to send admin email:', emailError);
     }
 
-    res.json({ success: true });
+    // Return with clear cart flag
+    res.json({ 
+      success: true, 
+      clearCart: true  // Add this flag to tell frontend to clear cart
+    });
   } catch (error) {
     console.error('❌ Payment verification failed:', error);
     res.status(500).json({ success: false, error: 'Payment verification failed', details: error.message });
