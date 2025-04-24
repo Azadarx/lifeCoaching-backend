@@ -284,9 +284,37 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
+function debugEnvironment() {
+  console.log('🛠 Environment check:');
+  console.log('- NODE_ENV:', process.env.NODE_ENV);
+  console.log('- RAZORPAY_KEY_ID:', process.env.RAZORPAY_KEY_ID ? 'Set ✓' : 'Missing ✗');
+  console.log('- RAZORPAY_SECRET:', process.env.RAZORPAY_SECRET ? 'Set ✓' : 'Missing ✗');
+  console.log('- EMAIL_USER:', process.env.EMAIL_USER ? 'Set ✓' : 'Missing ✗');
+  console.log('- EMAIL_PASSWORD:', process.env.EMAIL_PASSWORD ? 'Set ✓' : 'Missing ✗');
+
+  // Check Razorpay instance
+  if (razorpay) {
+    console.log('- Razorpay initialized ✓');
+  } else {
+    console.log('- Razorpay NOT initialized ✗');
+  }
+
+  // Optionally verify nodemailer
+  transporter.verify((err, success) => {
+    if (err) {
+      console.log('- SMTP server: Connection failed ✗', err.message);
+    } else {
+      console.log('- SMTP server: Ready ✓');
+    }
+  });
+}
+
+
 // Start server
 app.listen(PORT, () => {
+  console.log(`\n✅ ======================================== ✅`);
   console.log(`🚀 Server running on port ${PORT}`);
-  console.log(`🔑 Razorpay configured with key: ${process.env.RAZORPAY_KEY_ID.substring(0, 10)}...`);
-  console.log(`📧 Email configured with: ${process.env.EMAIL_USER}`);
+  console.log(`📅 ${new Date().toISOString()}`);
+  debugEnvironment();
+  console.log(`✅ ======================================== ✅\n`);
 });
