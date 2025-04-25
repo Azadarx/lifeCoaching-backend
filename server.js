@@ -33,8 +33,16 @@ if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// CORS Configuration
+const corsOptions = {
+  origin: 'https://life-coaching-frontend.vercel.app',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  maxAge: 3600,
+  credentials: true
+};
+
+// Apply CORS middleware with options
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Initialize Razorpay
@@ -314,6 +322,7 @@ function debugEnvironment() {
 app.listen(PORT, () => {
   console.log(`\n✅ ======================================== ✅`);
   console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`🔒 CORS enabled for: https://life-coaching-frontend.vercel.app`);
   console.log(`📅 ${new Date().toISOString()}`);
   debugEnvironment();
   console.log(`✅ ======================================== ✅\n`);
